@@ -70,6 +70,17 @@ class _QuizAppState extends State<QuizApp> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  // Previous Button
+                  ElevatedButton(
+                      onPressed: () => _prevQuestion(),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.blueGrey.shade900),
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                      )),
+
+                  // True Choice Button
                   ElevatedButton(
                     onPressed: () => _checkAnswer(true, context),
                     style: ElevatedButton.styleFrom(
@@ -79,6 +90,8 @@ class _QuizAppState extends State<QuizApp> {
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
+
+                  // False Choice Button
                   ElevatedButton(
                     onPressed: () => _checkAnswer(false, context),
                     style: ElevatedButton.styleFrom(
@@ -88,6 +101,8 @@ class _QuizAppState extends State<QuizApp> {
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
+
+                  // Next Button
                   ElevatedButton(
                       onPressed: () => _nextQuestion(),
                       style: ElevatedButton.styleFrom(
@@ -124,12 +139,22 @@ class _QuizAppState extends State<QuizApp> {
     }
 
     // go to next question after choice
-    _nextQuestion();
+    _updateQuestion();
+  }
+
+  _updateQuestion() {
+    setState(() {
+      _currentQuestionIndex = (_currentQuestionIndex + 1) % questionBank.length;
+    });
   }
 
   _nextQuestion() {
+    _updateQuestion();
+  }
+
+  _prevQuestion() {
     setState(() {
-      _currentQuestionIndex = (_currentQuestionIndex + 1) % questionBank.length;
+      _currentQuestionIndex = (_currentQuestionIndex - 1) % questionBank.length;
     });
   }
 }

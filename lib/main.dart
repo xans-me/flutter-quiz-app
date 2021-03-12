@@ -13,6 +13,8 @@ class QuizApp extends StatefulWidget {
 }
 
 class _QuizAppState extends State<QuizApp> {
+  int _currentQuestionIndex = 0;
+
   List questionBank = [
     Question.name("Dinar adalah salah satu mata uang Indonesia.", false),
     Question.name("Tanggal 1 Juni adalah Hari Kebangkitan Pancasila", false),
@@ -52,7 +54,7 @@ class _QuizAppState extends State<QuizApp> {
                     child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    questionBank[2].questionText,
+                    questionBank[_currentQuestionIndex].questionText,
                     style: TextStyle(
                       fontSize: 16.9,
                       color: Colors.white,
@@ -66,7 +68,7 @@ class _QuizAppState extends State<QuizApp> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 RaisedButton(
-                  onPressed: () => _checkAnswer(),
+                  onPressed: () => _checkAnswer(true),
                   color: Colors.blueGrey.shade900,
                   child: Text(
                     "TRUE",
@@ -74,7 +76,7 @@ class _QuizAppState extends State<QuizApp> {
                   ),
                 ),
                 RaisedButton(
-                  onPressed: () => _checkAnswer(),
+                  onPressed: () => _checkAnswer(false),
                   color: Colors.blueGrey.shade900,
                   child: Text(
                     "FALSE",
@@ -97,7 +99,18 @@ class _QuizAppState extends State<QuizApp> {
     );
   }
 
-  _checkAnswer() {}
+  _checkAnswer(bool userChoice) {
+    if (userChoice == questionBank[_currentQuestionIndex].isCorrect) {
+      // correct answer
+      debugPrint("Yes");
+    } else {
+      debugPrint("Incorect");
+    }
+  }
 
-  _nextQuestion() {}
+  _nextQuestion() {
+    setState(() {
+      _currentQuestionIndex = (_currentQuestionIndex + 1) % questionBank.length;
+    });
+  }
 }

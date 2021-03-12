@@ -108,12 +108,23 @@ class _QuizAppState extends State<QuizApp> {
 
   _checkAnswer(bool userChoice, BuildContext context) {
     if (userChoice == questionBank[_currentQuestionIndex].isCorrect) {
-      final snackbar = SnackBar(content: Text("Correct!"));
+      final snackbar = SnackBar(
+        duration: Duration(milliseconds: 500),
+        backgroundColor: Colors.green,
+        content: Text("Correct!"),
+      );
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
     } else {
-      final snackbar = SnackBar(content: Text("Incorrect!"));
+      final snackbar = SnackBar(
+        duration: Duration(milliseconds: 500),
+        backgroundColor: Colors.red,
+        content: Text("Incorrect!"),
+      );
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
     }
+
+    // go to next question after choice
+    _nextQuestion();
   }
 
   _nextQuestion() {
